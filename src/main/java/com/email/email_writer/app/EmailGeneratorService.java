@@ -11,6 +11,7 @@ import java.util.Map;
 @Service
 public class EmailGeneratorService {
 
+
     private final WebClient webClient;
 
     @Value("${gemini.api.url}")
@@ -33,8 +34,7 @@ public class EmailGeneratorService {
                         Map.of("parts", new Object[]{
                             Map.of("text",prompt)
             })
-        }
-        );
+        });
 
         //Do request and get response
         String response = webClient.post()
@@ -45,8 +45,9 @@ public class EmailGeneratorService {
                 .bodyToMono(String.class)
                 .block();
 
-        //Return response
 
+
+        //Return response
         return extractResponseContent(response);
     }
 
@@ -64,8 +65,10 @@ public class EmailGeneratorService {
 
         }catch(Exception e){
             return "Error processing request: " + e.getMessage();
+
         }
     }
+
 
     private String builtPrompt(EmailRequest emailRequest) {
         StringBuilder prompt = new StringBuilder();
